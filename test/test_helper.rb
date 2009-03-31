@@ -1,12 +1,10 @@
 require 'rubygems'
-require 'test/unit'
 require 'rack'
 require 'rack/test'
-require 'rack/contrib'
-require 'rack/config'
-require 'rdiscount'
-
+require 'test/unit'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'lib/content'
+config_file = File.read(File.dirname(__FILE__) + '/../config.ru')
+rack_application = eval("Rack::Builder.new { #{config_file} }")
+
 
