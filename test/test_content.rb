@@ -6,7 +6,6 @@ class TestContent < Test::Unit::TestCase
 
   def app
     app = Rack::Builder.new {
-      use Rack::ETag      
       use NuCMS::Content
       run Rack::NotFound.new('404.txt')
     }
