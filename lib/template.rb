@@ -5,6 +5,7 @@ module NuCMS
     def initialize
       #page.html -> /page , page.sidebar.html included in /page
       @pages = { }
+      @layout = []
       #TODO LOCALE
       Dir['content/en/*.html'].each do |page|
         arr = page.split('/').last.split('.')
@@ -14,6 +15,9 @@ module NuCMS
         else
           @pages[arr.first.to_sym] << page
         end
+      end
+      Dir['content/en/layout/*.html'].each do |page|
+        @layout << page
       end
     end
 
@@ -25,8 +29,14 @@ module NuCMS
       template = Hpricot(File.read('template/index.html'))
       if @pages.has_key?(path.to_sym) and !path.empty?
         seen_ids = []
-        selection = @pages[path.to_sym].map { |c| File.read(c) }.join
-        doc = Hpricot(selection)
+        selection = @layout + @pages[path.to_sym]
+
+        require 'pp'
+        pp selection.inspect
+
+        changes = selection.map { |c| File.read(c) }.join
+        doc = Hpricot(changes)
+
         ids = doc.search('//div').map { |e| e.get_attribute('id') }
         ids.each do |i| 
           unless seen_ids.include?(i)
