@@ -30,10 +30,6 @@ module NuCMS
       if @pages.has_key?(path.to_sym) and !path.empty?
         seen_ids = []
         selection = @layout + @pages[path.to_sym]
-
-        require 'pp'
-        pp selection.inspect
-
         changes = selection.map { |c| File.read(c) }.join
         doc = Hpricot(changes)
 
