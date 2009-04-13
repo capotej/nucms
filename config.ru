@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'rack'
 require 'hpricot'
+require 'erb'
 require 'rack/contrib'
 require 'lib/content'
 require 'lib/template'
-
 
 use Rack::ResponseCache, "cache"
 use NuCMS::Content
