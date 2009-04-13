@@ -112,8 +112,8 @@ a img {
 	text-decoration: underline;
 }
 
-#menu .first {
-	background: none;
+#menu ul li.active a{
+	background-color:red ;
 }
 
 #menu .active a {
@@ -254,3 +254,4 @@ a img {
 #footer a {
 	color: #FFFFFF;
 }
+

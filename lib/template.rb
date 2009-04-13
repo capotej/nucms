@@ -22,15 +22,17 @@ module NuCMS
     end
 
     def render(path)
+
       if path == ""
         path = "home"
       end
 
+      tm = TemplateMethods.new(path)
       template = Hpricot(File.read('template/index.html'))
       if @pages.has_key?(path.to_sym) and !path.empty?
         seen_ids = []
         selection = @layout + @pages[path.to_sym]
-        changes = selection.map { |c| ERB.new(File.read(c)).result }.join
+        changes = selection.map { |c| ERB.new(File.read(c)).result(binding) }.join
         doc = Hpricot(changes)
 
         ids = doc.search('//div').map { |e| e.get_attribute('id') }
