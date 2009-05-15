@@ -35,13 +35,23 @@ module NuCMS
         changes = selection.map { |c| ERB.new(File.read(c)).result(binding) }.join
         doc = Hpricot(changes)
 
-        ids = doc.search('//div').map { |e| e.get_attribute('id') }
+        ids = doc.search('//div[@id]').map { |e| e.get_attribute('id') }
         ids.each do |i| 
           unless seen_ids.include?(i)
             content = doc.search("//div[@id=\'#{i}\']")
-            template.search("//div[@id=\'#{i}\']").first.swap(content.to_html)
-            seen_ids << i
+            content_html = content.to_html
+            template.search("//div[@id=\'#{i}\']").first.swap(content_html)
           end
+          seen_ids << i
+        end
+        
+        title = doc.search('//title').to_html
+        meta = doc.search('//meta')
+
+        template.search('//title').first.swap(title)
+
+        unless meta.empty?
+          template.search('//head').append meta.to_html
         end
         res = template.to_html
       else

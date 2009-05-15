@@ -1,0 +1,4 @@
+test-spec --version=0.9.0
+rack-rack-contrib --source=http://gems.github.com/
+actionmailer
+hpricot
