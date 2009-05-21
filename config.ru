@@ -8,6 +8,6 @@ require 'lib/template'
 require 'lib/template_methods'
 
 use NuCMS::Content
-use Rack::Static, :urls => ["/css", "/images", "/js", "/javascripts"], :root => "template"
+use Rack::Static, :urls => ["/"], :root => "template"
 run Rack::NotFound.new('404.txt')
 
